@@ -2,19 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="53d18389-5374-4f8b-8de0-fb89340cff57" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__io_reactivex_rxjava_1_3_8.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RxJava-part1.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/rx1/RxUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__io_reactivex_rxjava_1_0_14.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/RxJava.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/RxJava.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/RxJava_main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/RxJava_main.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/RxJava_test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/RxJava_test.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RxJava-part1.md" beforeDir="false" afterPath="$PROJECT_DIR$/RxJava-part1.md" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -102,8 +90,8 @@
         <entry file="file://$PROJECT_DIR$/RxJava-part1.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="303">
-                <caret line="91" lean-forward="true" selection-start-line="91" selection-end-line="91" />
+              <first_editor relative-caret-position="200">
+                <caret line="65" column="55" selection-start-line="65" selection-start-column="55" selection-end-line="65" selection-end-column="55" />
               </first_editor>
               <second_editor />
             </state>
@@ -382,12 +370,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1550237947480</updated>
-      <workItem from="1550397856341" duration="7577000" />
+      <workItem from="1550397856341" duration="8154000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="7577000" />
+    <option name="totallyTimeSpent" value="8154000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -421,7 +409,7 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.6458333" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.64579606" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" weight="0.3298611" />
       <window_info anchor="bottom" id="Version Control" order="9" />
       <window_info anchor="bottom" id="Messages" order="10" weight="0.4060823" />
@@ -571,8 +559,8 @@
     <entry file="file://$PROJECT_DIR$/RxJava-part1.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="303">
-            <caret line="91" lean-forward="true" selection-start-line="91" selection-end-line="91" />
+          <first_editor relative-caret-position="200">
+            <caret line="65" column="55" selection-start-line="65" selection-start-column="55" selection-end-line="65" selection-end-column="55" />
           </first_editor>
           <second_editor />
         </state>

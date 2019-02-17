@@ -47,7 +47,7 @@ myObservable.subscribe(mySubscriber);
 当订阅成功后，myObservable对象就会调用mySubscriber的 onNext() 和 onComplete()方法。结果就是mySubscriber 打印出"Hello, world!"，事件结束。
 
 #### Simpler Code
-上面的代买如果仅仅是用来打印"Hello, world!"，那只会让你觉得得不偿失。这个例子只是用来让你能够直观的感受RxJava背后的调用原理，实际上RxJava提供了许多快捷方式使得编码更加简洁。
+上面的代码如果仅仅是用来打印"Hello, world!"，那只会让你觉得有些得不偿失。这个例子只是用来让你能够直观的感受RxJava背后的调用原理，实际上RxJava内部提供了许多快捷方式使得编码更加简洁。
 
 首先，我们来简化我们Observable。在RxJava中提供了多个Observable的创建方法。比如，在这个例子中，可以使用Observable.just()来发送一个单个事件，然后完成结束。
 ```
@@ -63,7 +63,7 @@ Action1<String> onNextAction = new Action1<String>() {
     }
 };
 ```
-Action 可以被用于定义Subscriber中执行方法的每个部分。比如，用于Observable.subscribe()中的接受三个Action1类型的参数，分别对应OnNext，OnComplete， OnError函数。
+Action 可以被用来定义Subscriber中执行方法onNext，onCompleted，onError的每个部分。比如，用于Observable.subscribe()中的接受三个Action1类型的参数，分别对应OnNext，OnComplete， OnError函数。
 ```
 myObservable.subscribe(onNextAction, onErrorAction, onCompleteAction);
 ```
