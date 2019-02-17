@@ -1,21 +1,22 @@
 import rx.Observable;
+import rx.Subscriber;
 import rx.functions.Action1;
+import rx1.RxUtil;
 
 /**
- * Created by yuminfeng on 2019/2/15.
+ * Created by yuminfeng
  */
 public class Test {
 
     public static void main(String[] arg) {
-        System.out.println("hello world!!");
+        System.out.println("------- start ------");
+        RxUtil rxUtil = new RxUtil();
+//        rxUtil.create();
+//        rxUtil.create2();
+//        rxUtil.just();
 
-        String[] names = new String[]{"hello", "world!"};
-        Observable.from(names)
-                .subscribe(new Action1<String>() {
-                    @Override
-                    public void call(String name) {
-                        System.out.println(name);
-                    }
-                });
+
+        Observable.just("Hello, world!")
+                .subscribe(s -> System.out.println(s));
     }
 }
