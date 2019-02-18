@@ -89,7 +89,100 @@ Observable.just("Hello, world!")
         .subscribe(s -> System.out.println(s));
 ```
 #### Transformation
+让我们做一些有趣的事情吧。
+假如我想要在"Hello, world!"后面添加上我的签名，一个可能的想法就是去改变这个Observable：
 
+```
+Observable.just("Hello, world! -Dan")
+        .subscribe(s -> System.out.println(s));
+```
+如果你能改变自己的Observable对象，这当然是有效的。但是如果这是别人提供的第三方库，你就不再具有这样的权限了。
+这就出现了一个潜在的问题，如果Observable在多处被引用，但是只需要在某一处需要被修改，这该如何呢？
 
+这时如果我们来修改我们自己的Subscriber对象怎么样呢：
+
+```
+Observable.just("Hello, world!")
+        .subscribe(s -> System.out.println(s + "-Dan"));
+```
+这种方式仍然不让你满意，因为我希望我的Subscriber尽可能的轻量级，因为我可能会在main thread 中运行它。另外，根据响应式函数编程的概念，Subscribers更应该做的事情是“响应”，仅去响应Observable发出的事件，而不是去修改事件。
+
+如果我能在某些中间步骤中对“Hello World！”进行变换岂不是很酷？
+
+####Introducing Operators(操作符)
+操作符就是为了解决对Observable对象的变换的问题。操作符被用于Observable 数据源和最终的Subscriber之间，来修改Observable发出的事件。RxJava提供了许多有用的操作符集合，但是目前我们只聚焦在少数有用的。
+
+在这里，使用map操作符，就是用来把一个被发送的事件转换为另一个事件：
+
+```
+Observable.just("Hello,world!").map(new Func1<String, String>() {
+    @Override
+    public String call(String s) {
+        return s + " - Dan";
+    }
+}).subscribe(s -> System.out.println(s));
+```
+
+同样的，我们可以使用lambdas 简化上面代码：
+
+```
+Observable.just("Hello,world!")
+        .map(s -> s + " - Dan")
+        .subscribe(s -> System.out.println(s));
+```
+是不是很酷，map() 操作符就是用来变换Observable对象的，map操作符返回一个Observable对象。我们可以通过链式多次调用map()，在一个Observable对象上多次使用map操作符，最终将我们需要的数据传递给Subscriber对象。
+
+#### More on map() (map 进阶)
+map操作符有趣的一点是它不必返回原Observable对象返回的数据类型，即你可以使用map操作符返回一个发出新的数据类型的Observable对象。
+
+比如，在上面的例子中，对Subscriber输出的字符串文本不感兴趣，而是想要输出的是字符串的hash值：
+
+```
+Observable.just("Hello, world!")
+        .map(new Func1<String, Integer>() {
+            @Override
+            public Integer call(String s) {
+                return s.hashCode();
+            }
+        })
+        .subscribe(i -> System.out.println(Integer.toString(i)));
+```
+很有趣吧？我们初始的Observable返回的是字符串，最终的Subscriber收到的却是Integer，当然使用lambda可以进一步简化代码：
+
+```
+Observable.just("Hello, world!")
+        .map(s -> s.hashCode())
+        .subscribe(i -> System.out.println(Integer.toString(i)));
+```
+
+如之前所说，我们希望我们的Subscriber做的事情越少越好，我们新增一个map来将hash转化为字符串：
+
+```
+Observable.just("Hello, world!")
+        .map(s -> s.hashCode())
+        .map(i -> Integer.toString(i))
+        .subscribe(s -> System.out.println(s));
+```
+上面代码中已经展示了，我们的Observable 和 Subscriber 还是之前的代码逻辑没有去改变。我们仅仅是在它们之间增加了转换步骤。我们还可以增加签名转化：
+
+```
+Observable.just("Hello, world!")
+        .map(s -> s + " -Dan")
+        .map(s -> s.hashCode())
+        .map(i -> Integer.toString(i))
+        .subscribe(s -> System.out.println(s));
+```
+#### So What?
+
+这里你可能在想"对于一些简单的代码，这里的逻辑非常多"。的确如此，这里的例子非常简单。但是你需要明白以下两点：
+
+#####1: Observable 和 Subscriber 还能做任何事情
+
+这里的Observable 可以是数据库查询, Subscriber 拿到查询结果然后展示在屏幕中。Observable 也可以是屏幕的点击事件，然后 Subscriber 去响应它。Observable可以是一个网络请求，Subscriber用来显示请求结果。它是一个可以处理任何问题的通用框架。 
+
+#####2: Observable 和 Subscriber 独立于它们之间的转换步骤。
+在Observable和Subscriber中间可以增减任何数量的map。整个系统是高度可组合的，操作数据是一个很简单的过程。
+
+结合这两点，您可以看到一个具有很大潜力的系统。
 
 [参考原文](https://blog.danlew.net/2014/09/15/grokking-rxjava-part-1/)
