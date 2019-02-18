@@ -32,7 +32,7 @@ public class Test {
         Observable.just("Hello, world!")
                 .map(s -> s + " -Dan")
                 .map(s -> s.hashCode())
-                .map(i -> Integer.toString(i))
-                .subscribe(s -> System.out.println(s));
+                .map(i -> Integer.toString(i));
+//                .subscribe(s -> System.out.println(s));
     }
 }
