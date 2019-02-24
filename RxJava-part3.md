@@ -6,20 +6,27 @@
 我们最初的Subscriber 已经监听了onComplete() 和 onError()方法。下面的代码将展示使用这两个方法：
 ```
 Observable.just("Hello, world!")
-    .map(s -> potentialException(s))
-    .map(s -> anotherPotentialException(s))
-    .subscribe(new Subscriber<String>() {
-    	@Override
-        public void onNext(String s) { System.out.println(s); }
+        .map(s -> potentialException(s))
+        .map(s -> anotherPotentialException(s))
+        .subscribe(new Subscriber<String>() {
+            @Override
+            public void onNext(String s) {
+                System.out.println(s);
+            }
 
-		@Override
-        public void onCompleted() { System.out.println("Completed!"); }
-        
-        @Override
-        public void onError(Throwable e) { System.out.println("Ouch!"); }
-    });
+            @Override
+            public void onCompleted() {
+                System.out.println("Completed!");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                System.out.println("Ouch!");
+            }
+        });
 ```
 代码中的potentialException() 和 anotherPotentialException()有可能会抛出异常。每一个Observable对象在终结的时候都会去调用onCompleted()或者onError()方法。所以这个例子中会要么打印”Completed!”字符，要么是”Ouch!”字符。  
+
 从这个例子中可以得到一些启示：  
 1.任何时候只要有异常发生onError()一定会被调用；  
 这使得错误处理更加简单。我只需要在一处方法中处理每个错误。   
