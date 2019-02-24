@@ -134,4 +134,4 @@ RxJava包含了大量的操作符很值得你去挨个看一下，这样你可�
 
 想象一下我们的数据在转换后是多么简单。在最后一个例子里，我们调用了两个API，对API返回的数据进行了处理，然后保存到磁盘。但是我们的Subscriber并不知道这些，它只是认为自己在接收一个Observable<String>对象。良好的封装性也带来了编码的便利！
 
-[参考原文](https://blog.danlew.net/2014/09/22/grokking-rxjava-part-2/)e
+[参考原文](https://blog.danlew.net/2014/09/22/grokking-rxjava-part-2/)
