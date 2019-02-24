@@ -28,10 +28,13 @@ Observable.just("Hello, world!")
 代码中的potentialException() 和 anotherPotentialException()有可能会抛出异常。每一个Observable对象在终结的时候都会去调用onCompleted()或者onError()方法。所以这个例子中会要么打印”Completed!”字符，要么是”Ouch!”字符。  
 
 从这个例子中可以得到一些启示：  
+
 1.任何时候只要有异常发生onError()一定会被调用；  
 这使得错误处理更加简单。我只需要在一处方法中处理每个错误。   
-2.操作符不需要处理异常；
+
+2.操作符不需要处理异常；  
 将异常处理交给Subscriber，Observable的操作符调用链中一旦有一个抛出了异常，都会直接执行onError()方法。  
+
 3.你能够知道什么时候Subscriber已经完全接收了全部的数据；  
 知道任务何时完成有助于代码的进入下一个流程。（虽然有可能Observable对象永远不会结束）  
 
