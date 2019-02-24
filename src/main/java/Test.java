@@ -1,6 +1,9 @@
 import rx.Observable;
+import rx.Scheduler;
+import rx.Subscriber;
 import rx.functions.Action1;
 import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 import rx1.RxUtil;
 
 import java.util.ArrayList;
@@ -20,27 +23,61 @@ public class Test {
 //        rxUtil.interval();
 //        rxUtil.timer();
 
-        query()
-                .flatMap(new Func1<List<String>, Observable<String>>() {
+//        query()
+//                .flatMap(new Func1<List<String>, Observable<String>>() {
+//                    @Override
+//                    public Observable<String> call(List<String> strings) {
+//                        return Observable.from(strings);
+//                    }
+//                })
+//                .filter(new Func1<String, Boolean>() {
+//                    @Override
+//                    public Boolean call(String s) {
+//                        return s != null;
+//                    }
+//                })
+//                .flatMap(new Func1<String, Observable<?>>() {
+//                    @Override
+//                    public Observable<?> call(String s) {
+//                        return Observable.just(s + "__end ");
+//                    }
+//                })
+//                .take(3)
+//                .subscribe(s -> System.out.println(s));
+
+        Observable.just("Hello, world!")
+                .subscribeOn(Schedulers.newThread())  //指定Observable自身在哪个调度器上执行
+//                .map(s -> potentialException(s))
+                .map(new Func1<String, String>() {
                     @Override
-                    public Observable<String> call(List<String> strings) {
-                        return Observable.from(strings);
+                    public String call(String s) {
+                        System.out.println(Thread.currentThread().getName());
+                        return s;
                     }
                 })
-                .filter(new Func1<String, Boolean>() {
+                .observeOn(Schedulers.computation()) //指定一个观察者在哪个调度器上观察这个Observable
+                .subscribe(new Subscriber<String>() {
                     @Override
-                    public Boolean call(String s) {
-                        return s != null;
+                    public void onNext(String s) {
+                        System.out.println(Thread.currentThread().getName());
+                        System.out.println(s);
                     }
-                })
-                .flatMap(new Func1<String, Observable<?>>() {
+
                     @Override
-                    public Observable<?> call(String s) {
-                        return Observable.just(s + "__end ");
+                    public void onCompleted() {
+                        System.out.println("Completed!");
                     }
-                })
-                .take(3)
-                .subscribe(s -> System.out.println(s));
+
+                    @Override
+                    public void onError(Throwable e) {
+                        System.out.println("Ouch!");
+                    }
+                });
+    }
+
+    private static String potentialException(String s) {
+        int flg = 10/0;
+        return s + flg;
     }
 
     public static Observable<List<String>> query() {
