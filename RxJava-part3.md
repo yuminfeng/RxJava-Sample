@@ -39,6 +39,7 @@ Observable.just("Hello, world!")
 知道任务何时完成有助于代码的进入下一个流程。（虽然有可能Observable对象永远不会结束）  
 
 我发现这种错误处理方式要比一般传统的处理方式更加简单。在传统的错误处理方式中，通常是在每个回调中来处理错误。这不仅会导致代码重复，还意味着每个回调都必须知道如何处理错误，这意味着回调代码与调用方耦合度太高。  
+  
 通过RxJava来处理的话，Observable对象根本不需要知道如何处理错误！同样的你的操作符也无需处理错误状态，一旦发生错误，就会跳过当前和后续的操作符。所有的错误处理都交给Subscriber来做。
 
 #### 调度器
@@ -57,7 +58,8 @@ myObservableServices.retrieveImage(url)
 
 如果使用AsyncTask或者其他类似的异步处理的类时，我需要注意并发执行的部分代码。而使用RxJava，我可以保持代码不变，仅仅在需要并发的时候调用这两个操作符就可以。
 
-####订阅（Subscriptions）
+####订阅（Subscriptions）  
+
 这里有一件事情没有告知，那就是调用Observable.subscribe()时，会返回一个Subscription对象。这个对象表示Observable 和Subscriber之间的联系。
 ```
 Subscription subscription = Observable.just("Hello, World!")
