@@ -58,7 +58,7 @@ myObservableServices.retrieveImage(url)
 
 如果使用AsyncTask或者其他类似的异步处理的类时，我需要注意并发执行的部分代码。而使用RxJava，我可以保持代码不变，仅仅在需要并发的时候调用这两个操作符就可以。
 
-####订阅（Subscriptions）  
+#### 订阅（Subscriptions）  
 
 这里有一件事情没有告知，那就是调用Observable.subscribe()时，会返回一个Subscription对象。这个对象表示Observable 和Subscriber之间的联系。
 ```
@@ -73,7 +73,7 @@ System.out.println("Unsubscribed=" + subscription.isUnsubscribed());
 ```
 RxJava的另外一个好处就是它处理注销订阅的状态的时，会停止整个调用链。如果你使用了一串很复杂的操作符，调用unsubscribe方法将会在它当前执行的地方终止。不需要做任何额外的工作！
 
-####总结  
+#### 总结  
 
 请记住，这些文章是仅仅对RxJava的介绍。RxJava中还有更多的我没介绍的功能等你探索（比如backpressure）。当然我也不是所有的代码都使用响应式的方式–仅仅当代码复杂到我想将它分解成简单的逻辑的时候，我才使用响应式代码。  
 起初，我计划将这篇文章作为这个系列的总结，但是我收到许多请求我介绍在Android中使用RxJava，所以你可以继续阅读第四篇了。我希望这个介绍能让你开始使用RxJava。如果你想了解更多，我建议你阅读RxJava的官方wiki。
