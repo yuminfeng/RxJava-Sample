@@ -51,15 +51,15 @@ public class Test {
                 .map(new Func1<String, String>() {
                     @Override
                     public String call(String s) {
-                        System.out.println(Thread.currentThread().getName());
+                        System.out.println("call:-> " + Thread.currentThread().getName());
                         return s;
                     }
                 })
-                .observeOn(Schedulers.computation()) //指定一个观察者在哪个调度器上观察这个Observable
+                .observeOn(Schedulers.newThread()) //指定一个观察者在哪个调度器上观察这个Observable
                 .subscribe(new Subscriber<String>() {
                     @Override
                     public void onNext(String s) {
-                        System.out.println(Thread.currentThread().getName());
+                        System.out.println("onNext:-> " + Thread.currentThread().getName());
                         System.out.println(s);
                     }
 
@@ -76,7 +76,7 @@ public class Test {
     }
 
     private static String potentialException(String s) {
-        int flg = 10/0;
+        int flg = 10 / 0;
         return s + flg;
     }
 
