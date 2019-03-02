@@ -76,7 +76,49 @@ public Observable<Object> newMethod() {
 ``` 
 现在，newMethod()的调用不会阻塞了，除非你订阅返回的observable对象。  
 #### 生命周期
-我把最难的部分留在最后。
+我把最难的部分留在最后。怎样来处理Activity 的生命周期？这里有两个问题需要处理：  
 
+1.在configuration改变（比如转屏）之后继续之前的Subscription。  
+比如你使用Retrofit发出了一个REST请求，接着想在ListView中展示结果。如果在网络请求的时候用户旋转了屏幕怎么办？你当然想继续刚才的请求，但是怎么做？
+
+2.Observable持有Context导致的内存泄露。  
+这个问题是因为创建subscription的时候，以某种方式持有了context的引用，尤其是当你和view交互的时候，这很容易发生！如果Observable没有及时结束，内存占用就会越来越大。  
+
+这里有一些指导方案你可以参考。  
+第一个问题的解决方案就是使用RxJava内置的缓存机制，这样你就可以对同一个Observable对象执行unsubscribe/resubscribe，却不用重复运行得到Observable的代码。
+cache() (或者 replay())会继续执行网络请求（甚至你调用了unsubscribe也不会停止）。这就是说你可以在Activity重新创建的时候从cache()的返回值中创建一个新的Observable对象。
+```
+Observable<Photo> request = service.getUserPhoto(id).cache();
+Subscription sub = request.subscribe(photo -> handleUserPhoto(photo));
+
+// ...When the Activity is being recreated...
+sub.unsubscribe();
+
+// ...Once the Activity is recreated...
+request.subscribe(photo -> handleUserPhoto(photo));
+``` 
+注意，两次使用的是同一个缓存的请求。当然去存储请求的结果还是要你自己来做，和所有其他的生命周期相关的解决方案一样，必须在生命周期外的某个地方存储。（就像重复fragment或者单例等）。  
+
+第二个问题的解决方案就是在生命周期的某个时刻取消订阅。一个很常见的模式就是使用CompositeSubscription来持有所有的Subscriptions，然后在onDestroy()或者onDestroyView()里取消所有的订阅。
+```
+private CompositeSubscription mCompositeSubscription
+    = new CompositeSubscription();
+
+private void doSomething() {
+    mCompositeSubscription.add(
+		AndroidObservable.bindActivity(this, Observable.just("Hello, World!"))
+        .subscribe(s -> System.out.println(s)));
+}
+
+@Override
+protected void onDestroy() {
+    super.onDestroy();
+    
+    mCompositeSubscription.unsubscribe();
+}
+```
+你可以在Activity/Fragment的基类里创建一个CompositeSubscription对象，然后在子类中使用它。  
+注意! 一旦你调用了 CompositeSubscription.unsubscribe()，这个CompositeSubscription对象就不可用了,之前你添加的任何订阅它都会自动的执行unsubscribe。如果你还想使用CompositeSubscription，就必须在创建一个新的对象了。  
+解决这两个问题都需要添加额外的代码；   
 
 [参考原文](https://blog.danlew.net/2014/10/08/grokking-rxjava-part-4/)
